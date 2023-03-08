@@ -8,9 +8,10 @@ import Navbar from "../components/Navbar"
 import RadioInput from "../components/product/radio-input"
 
 export default function Product() {
+    const product_id = useParams()
+    const docRef = doc(db, "products", product_id.id);
     const [product, setProduct] = useState()
     const [quantity, setQuantity] = useState(1)
-    const product_id = useParams()
     const { currentUser } = useAuth()
 
     const addToCart = async (e) => {
@@ -31,8 +32,18 @@ export default function Product() {
         }
     }
 
+    const writeReview = async (e) => {
+        e.preventDefault()
+        const form = e.target
+        const today = new Date()
+        const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear()
+        let reviews = product.reviews
+        reviews = [...reviews, { reviewer: currentUser.displayName, reviewerPhoto: currentUser.photoURL, review: form.review.value, date }]
+        await updateDoc(docRef, { reviews })
+        form.review.value = ''
+    }
+
     useEffect(() => {
-        const docRef = doc(db, "products", product_id.id);
         async function fetchProduct() {
             const res = await getDoc(docRef)
             console.log(res.data())
@@ -131,38 +142,32 @@ export default function Product() {
                     </div>
                 </div>
                 <div className="container-fluid py-5 px-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 class="mb-4">Reviews for {product.name}</h4>
-                            <div class="media mb-4">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style={{ width: "45px;" }} />
-                                <div class="media-body">
-                                    <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                    <div class="text-primary mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
-                                    <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                </div>
-                            </div>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h4 className="mb-4">Reviews for {product.name}</h4>
+                            {product.reviews.map((review, index) => {
+                                return (
+                                    <div key={index} className="mb-4">
+                                        {/* <h6>{review.name}<small> - <i>01 Jan 2045</i></small></h6> */}
+                                        <h6>{review.reviewer}</h6>
+                                        <p>{review.review}</p>
+                                    </div>)
+                            })}
                         </div>
-                        <div class="col-md-6">
-                            <h4 class="mb-4">Leave a review</h4>
-                            <form>
-                                <div class="form-group">
-                                    <label for="message">Your Review *</label>
-                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                        <div className="col-md-6">
+                            <h4 className="mb-4">Leave a review</h4>
+                            <form onSubmit={writeReview}>
+                                <div className="form-group">
+                                    <label htmlFor="review">Your Review *</label>
+                                    <textarea name="review" id="review" cols="30" rows="5" className="form-control" required></textarea>
                                 </div>
-                                <div class="form-group mb-0">
-                                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3" />
+                                <div className="form-group mb-0">
+                                    <input type="submit" value="Leave Your Review" className="btn btn-primary px-3" />
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>
+                </div >
             </>
         )
     } else {
