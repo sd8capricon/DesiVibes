@@ -148,8 +148,7 @@ export default function Product() {
                             {product.reviews.map((review, index) => {
                                 return (
                                     <div key={index} className="mb-4">
-                                        {/* <h6>{review.name}<small> - <i>01 Jan 2045</i></small></h6> */}
-                                        <h6>{review.reviewer}</h6>
+                                        <h6>{review.reviewer}<small> - <i>{review.date}</i></small></h6>
                                         <p>{review.review}</p>
                                     </div>)
                             })}
