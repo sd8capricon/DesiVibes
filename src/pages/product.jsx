@@ -7,15 +7,13 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import Navbar from "../components/Navbar"
 import RadioInput from "../components/product/radio-input"
 
-export default function Product({ children }) {
+export default function Product() {
     const [product, setProduct] = useState()
-    const [size, setSize] = useState()
-    const [color, setColor] = useState()
     const [quantity, setQuantity] = useState(1)
     const product_id = useParams()
     const { currentUser } = useAuth()
 
-    const handleSubmit = async (e) => {
+    const addToCart = async (e) => {
         e.preventDefault()
         const form = e.target
         setColor(form.color.value)
@@ -84,7 +82,7 @@ export default function Product({ children }) {
                             <h3 className="font-weight-semi-bold mb-4">${product.price}</h3>
                             <p className="mb-4">{product && product.description}</p>
                             <div className="d-flex mb-3">
-                                <form onSubmit={handleSubmit}>
+                                <form onSubmit={addToCart}>
                                     <p className="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
                                     {
                                         product.sizes.map((size, index) => {
@@ -132,7 +130,39 @@ export default function Product({ children }) {
                         </div>
                     </div>
                 </div>
-
+                <div className="container-fluid py-5 px-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="mb-4">Reviews for {product.name}</h4>
+                            <div class="media mb-4">
+                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style={{ width: "45px;" }} />
+                                <div class="media-body">
+                                    <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+                                    <div class="text-primary mb-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="mb-4">Leave a review</h4>
+                            <form>
+                                <div class="form-group">
+                                    <label for="message">Your Review *</label>
+                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </>
         )
     } else {
