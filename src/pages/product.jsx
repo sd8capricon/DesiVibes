@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { db } from "../firebase-config"
 import { useAuth } from "../contexts/AuthContext"
-import { collection, doc, endAt, getDoc, getDocs, orderBy, query, startAt, updateDoc, where } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 
 import Navbar from "../components/Navbar"
 import RadioInput from "../components/product/radio-input"
@@ -25,7 +25,7 @@ export default function Product({ children }) {
             const docRef = doc(db, "users", currentUser.uid);
             const res = await getDoc(docRef)
             let cart = res.data().cart
-            cart = [...cart, { product_id: product_id.id, size: form.size.value, color: form.color.value, quantity: quantity }]
+            cart = [...cart, { product_id: product_id.id, size: form.size.value, color: form.color.value, quantity: quantity, price: product.price * quantity, price_per_unit: product.price }]
             await updateDoc(docRef, { cart })
         }
         else {
