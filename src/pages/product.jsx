@@ -17,8 +17,6 @@ export default function Product() {
     const addToCart = async (e) => {
         e.preventDefault()
         const form = e.target
-        setColor(form.color.value)
-        setSize(form.size.value)
 
         if (currentUser) {
             const docRef = doc(db, "users", currentUser.uid);
