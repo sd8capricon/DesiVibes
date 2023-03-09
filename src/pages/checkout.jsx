@@ -33,7 +33,11 @@ export default function CheckOut() {
         user.cart.forEach(product => {
             total += product.price
         })
-        return total
+        let gst = 0.05 * total // 5% GST
+        let shipping = 0.10 * total // 10% Shipping
+        total += gst
+        total += shipping
+        return { gst, shipping, finalCost: total }
     }
 
 
@@ -87,9 +91,21 @@ export default function CheckOut() {
                                     </div>
                                     <span className="text-success">−$5</span>
                                 </li>
+                                <li className="list-group-item d-flex justify-content-between bg-light">
+                                    <div>
+                                        <h6 className="my-0">Taxes (+5% GST)</h6>
+                                    </div>
+                                    <span className="text-success">${total.gst}</span>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between bg-light">
+                                    <div>
+                                        <h6 className="my-0">Shipping (+10% GST)</h6>
+                                    </div>
+                                    <span className="text-success">${total.shipping}</span>
+                                </li>
                                 <li className="list-group-item d-flex justify-content-between">
                                     <span>Total (USD)</span>
-                                    <strong>${total}</strong>
+                                    <strong>${total.finalCost}</strong>
                                 </li>
                             </ul>
 
