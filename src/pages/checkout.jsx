@@ -12,20 +12,22 @@ export default function CheckOut() {
     const { currentUser } = useAuth()
     const [user, setUser] = useState()
     const [total, setTotal] = useState(0)
+    // if (currentUser) {
     const docRef = doc(db, "users", currentUser.uid);
+    // }
 
     useEffect(() => {
         const fetchUser = async () => {
-            if (currentUser) {
-                const res = await getDoc(docRef)
-                console.log(res.data())
-                setUser(() => {
-                    setTotal(calculateTotal(res.data()))
-                    return res.data()
-                })
-            }
+            const res = await getDoc(docRef)
+            console.log(res.data())
+            setUser(() => {
+                setTotal(calculateTotal(res.data()))
+                return res.data()
+            })
         }
-        fetchUser()
+        if (currentUser) {
+            fetchUser()
+        }
     }, [])
 
     const calculateTotal = (user) => {
@@ -249,6 +251,11 @@ export default function CheckOut() {
                     </footer>
                 </div >
             </>
+        )
+    }
+    else {
+        return (
+            "Login first"
         )
     }
 }

@@ -31,6 +31,35 @@
     margin-inline: 5px;
 }
 
+/* Home */
+
+.header .list-group-item:first-child {
+    background-color: var(--primary);
+}
+
+.header .list-group-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.header .list-group-item a {
+    color: #000;
+    text-decoration: none;
+}
+
+.header .list-group-item a:hover {
+    color: var(--primary);
+}
+
+.header .carousel-item {
+    height: 420px;
+}
+
+.header .carousel .carousel-control span {
+    padding: 15px;
+    background-color: #000;
+    border-color: #000;
+}
 
 /* Cart */
 .cart .quantity-control .btn {

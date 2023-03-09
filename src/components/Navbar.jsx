@@ -1,6 +1,6 @@
-export default function Navbar() {
+export default function Navbar({ hideCategories }) {
     return (
-        <div className="container-fluid mb-5">
+        <div className="container-fluid shadow py-2 mb-4">
             <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#">DesiVibes</a>
@@ -9,17 +9,10 @@ export default function Navbar() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <div className="navbar-nav mr-auto py-0">
-                            <a href="index.html" className="nav-item nav-link active">Home</a>
+                            <a href="/" className="nav-item nav-link active">Home</a>
                             <a href="shop.html" className="nav-item nav-link">Shop</a>
                             <a href="detail.html" className="nav-item nav-link">Shop Detail</a>
-                            <div className="nav-item dropdown">
-                                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div className="dropdown-menu rounded-0 m-0">
-                                    <a href="cart.html" className="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" className="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
-                            <div className="nav-item dropdown d-lg-hidden d-md-none">
+                            {!hideCategories && <div className="nav-item dropdown">
                                 <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
                                 <div className="dropdown-menu rounded-0 m-0">
                                     <a href="" className="dropdown-item">Shirts</a>
@@ -32,7 +25,7 @@ export default function Navbar() {
                                     <a href="" className="dropdown-item">Jackets</a>
                                     <a href="" className="dropdown-item">Shoes</a>
                                 </div>
-                            </div>
+                            </div>}
                             <a href="contact.html" className="nav-item nav-link">Contact</a>
                         </div>
                         <div className="navbar-nav ms-auto py-0">
