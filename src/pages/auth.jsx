@@ -2,6 +2,8 @@ import { useRef, useState } from "react"
 import { Link } from 'react-router-dom'
 import { useAuth } from "../contexts/AuthContext"
 
+import Navbar from "../components/Navbar"
+
 
 export default function Auth(props) {
     const { currentUser, signup, login } = useAuth()
@@ -29,7 +31,8 @@ export default function Auth(props) {
     }
 
     return (
-        <div>
+        <>
+            <Navbar />
             <h2>{currentUser?.email}</h2>
             <form onSubmit={handleSubmit}>
                 {formType === 'Sign Up' &&
@@ -60,6 +63,6 @@ export default function Auth(props) {
             <button onClick={switchFormType}>Log In</button>
             {formType === 'Log In' &&
                 <Link to="/forgot-password">Forgot Password?</Link>}
-        </div>
+        </>
     )
 }

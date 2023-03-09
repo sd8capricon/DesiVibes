@@ -8,15 +8,15 @@ export default function Home() {
                 <div className="row header">
                     <div className="col-3 categories">
                         <ul className="list-group">
-                            <li className="list-group-item"><h4>Shop by Category</h4></li>
-                            <li className="list-group-item"><a href="/">Shirts</a></li>
-                            <li className="list-group-item"><a href="/">T-shirts</a></li>
-                            <li className="list-group-item"><a href="/">Jeans</a></li>
-                            <li className="list-group-item"><a href="/">Sweatshirts</a></li>
-                            <li className="list-group-item"><a href="/">Hoodies</a></li>
-                            <li className="list-group-item"><a href="/">Jackets</a></li>
-                            <li className="list-group-item"><a href="/">SportsWear</a></li>
-                            <li className="list-group-item"><a href="/">Blazers</a></li>
+                            <li className="list-group-item"><h5>Shop by Category</h5></li>
+                            <li className="list-group-item"><a href="/category/shirts">Shirts</a></li>
+                            <li className="list-group-item"><a href="/category/tshirts">T-shirts</a></li>
+                            <li className="list-group-item"><a href="/category/jeans">Jeans</a></li>
+                            <li className="list-group-item"><a href="/category/sweatshirts">Sweatshirts</a></li>
+                            <li className="list-group-item"><a href="/category/hoodies">Hoodies</a></li>
+                            <li className="list-group-item"><a href="/category/jackets">Jackets</a></li>
+                            <li className="list-group-item"><a href="/category/sportswear">SportsWear</a></li>
+                            <li className="list-group-item"><a href="/category/blzers">Blazers</a></li>
                         </ul>
                     </div>
                     <div className="col-9">

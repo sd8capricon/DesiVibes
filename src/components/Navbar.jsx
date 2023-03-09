@@ -11,19 +11,18 @@ export default function Navbar({ hideCategories }) {
                         <div className="navbar-nav mr-auto py-0">
                             <a href="/" className="nav-item nav-link active">Home</a>
                             <a href="shop.html" className="nav-item nav-link">Shop</a>
-                            <a href="detail.html" className="nav-item nav-link">Shop Detail</a>
+                            <a href="detail.html" className="nav-item nav-link">About Us</a>
                             {!hideCategories && <div className="nav-item dropdown">
-                                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
+                                <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Shop by Category</a>
                                 <div className="dropdown-menu rounded-0 m-0">
-                                    <a href="" className="dropdown-item">Shirts</a>
-                                    <a href="" className="dropdown-item">Jeans</a>
-                                    <a href="" className="dropdown-item">Swimwear</a>
-                                    <a href="" className="dropdown-item">Sleepwear</a>
-                                    <a href="" className="dropdown-item">Sportswear</a>
-                                    <a href="" className="dropdown-item">Jumpsuits</a>
-                                    <a href="" className="dropdown-item">Blazers</a>
-                                    <a href="" className="dropdown-item">Jackets</a>
-                                    <a href="" className="dropdown-item">Shoes</a>
+                                    <a className="dropdown-item" href="/category/shirts">Shirts</a>
+                                    <a className="dropdown-item" href="/category/tshirts">T-shirts</a>
+                                    <a className="dropdown-item" href="/category/jeans">Jeans</a>
+                                    <a className="dropdown-item" href="/category/sweatshirts">Sweatshirts</a>
+                                    <a className="dropdown-item" href="/category/hoodies">Hoodies</a>
+                                    <a className="dropdown-item" href="/category/jackets">Jackets</a>
+                                    <a className="dropdown-item" href="/category/sportswear">SportsWear</a>
+                                    <a className="dropdown-item" href="/category/blzers">Blazers</a>
                                 </div>
                             </div>}
                             <a href="contact.html" className="nav-item nav-link">Contact</a>
