@@ -1,3 +1,5 @@
+import './radio-input.css'
+
 export default function RadioInput({ name, value, defaultCheck }) {
     return (
         <>

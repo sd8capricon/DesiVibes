@@ -1,0 +1,7 @@
+.form-check-input:checked {
+    background-color: var(--primary);
+}
+
+.form-check-label {
+    padding-left: 8px;
+}

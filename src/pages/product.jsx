@@ -22,7 +22,7 @@ export default function Product() {
             const docRef = doc(db, "users", currentUser.uid);
             const res = await getDoc(docRef)
             let cart = res.data().cart
-            cart = [...cart, { product_id: product_id.id, size: form.size.value, color: form.color.value, quantity: quantity, price: product.price * quantity, price_per_unit: product.price }]
+            cart = [...cart, { product_id: product_id.id, product_name: product.name, size: form.size.value, color: form.color.value, quantity: quantity, price: product.price * quantity, price_per_unit: product.price }]
             await updateDoc(docRef, { cart })
         }
         else {
@@ -106,13 +106,17 @@ export default function Product() {
                                         })
                                     }
 
-                                    <div className="d-flex">
+                                    <div className="quantity-control">
                                         <div className="side-btn">
-                                            <button onClick={(e) => { e.preventDefault(), quantity > 1 && setQuantity(quantity - 1) }} className="btn btn-primary">-</button>
+                                            <button onClick={(e) => { e.preventDefault(), quantity > 1 && setQuantity(quantity - 1) }} className="btn btn-primary">
+                                                <i class="bi bi-dash"></i>
+                                            </button>
                                         </div>
                                         <input type="text" size={2} value={quantity} style={{ textAlign: 'center' }} disabled />
                                         <div className="side-btn">
-                                            <button onClick={(e) => { e.preventDefault(), setQuantity(quantity + 1) }} className="btn btn-primary">+</button>
+                                            <button onClick={(e) => { e.preventDefault(), setQuantity(quantity + 1) }} className="btn btn-primary">
+                                                <i class="bi bi-plus"></i>
+                                            </button>
                                         </div>
                                         <button className="btn btn-primary"><i className=""></i> Add To Cart</button>
                                     </div>

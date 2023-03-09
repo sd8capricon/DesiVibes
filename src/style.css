@@ -1,7 +1,12 @@
+:root {
+    --primary: #D19C97;
+    --bs-primary-rgb: 209, 156, 151;
+}
+
 .btn-primary {
     color: #000;
-    background-color: #D19C97;
-    border-color: #D19C97;
+    background-color: var(--primary);
+    border-color: var(--primary);
 }
 
 .btn-primary:hover {
@@ -14,4 +19,20 @@
     color: #000;
     background-color: #c17a74;
     border-color: #c17a74;
+}
+
+.quantity-control {
+    display: flex;
+    margin-top: 10px;
+}
+
+.quantity-control>input {
+    width: 50px;
+    margin-inline: 5px;
+}
+
+
+/* Cart */
+.cart .quantity-control .btn {
+    font-size: .6em;
 }

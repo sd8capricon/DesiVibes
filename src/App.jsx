@@ -10,6 +10,7 @@ import Home from './pages/home'
 import Auth from './pages/auth'
 import Product from './pages/product'
 import ResetPass from './pages/resetpass'
+import CheckOut from './pages/checkout'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/auth' element={<Auth />} />
           <Route path='/product/:id' element={<Product />} />
           <Route path='/forgot-password' element={<ResetPass />} />
+          <Route path='/checkout' element={<CheckOut />} />
         </Routes>
       </AuthContextProvider>
     </Router>
