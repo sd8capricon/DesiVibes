@@ -44,7 +44,7 @@ export default function CheckOut() {
             cart[index].price -= cart[index].price_per_unit
             await updateDoc(docRef, { cart })
             setUser({ ...user, cart })
-            setTotal(calculateTotal())
+            setTotal(calculateTotal(user))
         }
         else if (cart[index].quantity == 1) {
             cart.splice(index, 1)
