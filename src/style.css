@@ -1,5 +1,6 @@
 :root {
     --primary: #D19C97;
+    --primary-dark: ;
     --bs-primary-rgb: 209, 156, 151;
 }
 
@@ -11,14 +12,14 @@
 
 .btn-primary:hover {
     color: #000;
-    background-color: #c17a74;
-    border-color: #c17a74;
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
 }
 
 .btn-primary:active:focus {
     color: #000;
-    background-color: #c17a74;
-    border-color: #c17a74;
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
 }
 
 .quantity-control {
@@ -31,9 +32,25 @@
     margin-inline: 5px;
 }
 
+/* Navbar */
+.navbar-nav.right .nav-icons>* {
+    font-size: 25px;
+    margin-right: 20px;
+}
+
+.navbar-nav.right .bi {
+    color: var(--primary)
+}
+
+.navbar-nav.right .bi:hover {
+    color: var(--primary-dark)
+}
+
 /* Home */
 
 .header .list-group-item:first-child {
+    font-size: larger;
+    font-weight: bold;
     background-color: var(--primary);
 }
 
@@ -52,7 +69,7 @@
 }
 
 .header .carousel-item {
-    height: 415px;
+    height: 410px;
 }
 
 .header .carousel .carousel-control span {

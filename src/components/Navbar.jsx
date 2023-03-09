@@ -1,4 +1,8 @@
+import { useAuth } from "../contexts/AuthContext"
+
 export default function Navbar({ hideCategories }) {
+    const { currentUser } = useAuth()
+
     return (
         <div className="container-fluid shadow py-2 mb-4">
             <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
@@ -8,7 +12,7 @@ export default function Navbar({ hideCategories }) {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <div className="navbar-nav mr-auto py-0">
+                        <div className="navbar-nav flex justify-content-center">
                             <a href="/" className="nav-item nav-link active">Home</a>
                             <a href="shop.html" className="nav-item nav-link">Shop</a>
                             <a href="detail.html" className="nav-item nav-link">About Us</a>
@@ -27,12 +31,18 @@ export default function Navbar({ hideCategories }) {
                             </div>}
                             <a href="contact.html" className="nav-item nav-link">Contact</a>
                         </div>
-                        <div className="navbar-nav ms-auto py-0">
-                            <a href="/auth" className="nav-item nav-link btn btn-primary">Login/Register</a>
+                        <div className="navbar-nav right ms-auto py-0">
+                            {currentUser ?
+                                <div className="nav-icons">
+                                    <a href="/checkout"><i className="bi bi-cart-fill"></i></a>
+                                    <a href="/profile"><i className="bi bi-person-circle"></i></a>
+                                </div> :
+                                <a href="/auth" className="nav-item nav-link btn btn-primary">Login/Register</a>
+                            }
                         </div>
                     </div>
-                </div>
-            </nav>
-        </div>
+                </div >
+            </nav >
+        </div >
     )
 }

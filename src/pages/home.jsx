@@ -8,7 +8,7 @@ export default function Home() {
                 <div className="row header">
                     <div className="col-3 categories">
                         <ul className="list-group">
-                            <li className="list-group-item"><h5>Shop by Category</h5></li>
+                            <li className="list-group-item">Shop by Category</li>
                             <li className="list-group-item"><a href="/category/shirts">Shirts</a></li>
                             <li className="list-group-item"><a href="/category/tshirts">T-shirts</a></li>
                             <li className="list-group-item"><a href="/category/jeans">Jeans</a></li>
