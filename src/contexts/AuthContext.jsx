@@ -18,7 +18,7 @@ export default function AuthContextProvider(props) {
             .then(userCredential => {
                 sendEmailVerification(auth.currentUser)
                 updateProfile(auth.currentUser, { displayName: name })
-                setDoc(doc(db, "users", auth.currentUser.uid), { billing_address: address, city, state, cart: [], orders: [] })
+                setDoc(doc(db, "users", auth.currentUser.uid), { billing_address: address, city, state, cart: [] })
             });
     }
 
