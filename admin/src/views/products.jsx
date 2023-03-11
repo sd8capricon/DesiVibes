@@ -9,15 +9,8 @@ import {
     PaginationItem,
     PaginationLink,
     Button,
-    Badge,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    DropdownToggle,
     Media,
-    Progress,
-    Table,
-    UncontrolledTooltip
+    Table
 } from "reactstrap";
 import EmptyHeader from "components/Headers/EmptyHeader";
 
