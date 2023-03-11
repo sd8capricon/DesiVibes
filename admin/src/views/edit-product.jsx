@@ -133,6 +133,14 @@ export default function EditProduct() {
         }
     }
 
+    const calculateInventory = () => {
+        let inventory = 0
+        variants.forEach(variant => {
+            inventory += variant.inventory
+        })
+        return inventory
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (e.target.gender.value === "") {
@@ -155,7 +163,8 @@ export default function EditProduct() {
             gender: e.target.gender.value,
             colors: colors,
             sizes: sizes,
-            variants: variants
+            variants: variants,
+            totalInventory: calculateInventory()
         }
         if (removedImages.length !== 0) {
             for (let i = 0; i < removedImages.length; i++) {
