@@ -149,7 +149,7 @@ export default function AddProuct() {
                 imageRefs.push(url)
             })
         }
-        await updateDoc(docRef, { images: imageRefs })
+        await updateDoc(docRef, { id: docRef.id, images: imageRefs })
         console.log(docRef.id)
         window.location.href = "/admin/products"
     }
