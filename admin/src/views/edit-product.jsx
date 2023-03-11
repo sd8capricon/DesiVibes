@@ -168,7 +168,7 @@ export default function EditProduct() {
         const newImageRefs = []
         if (newImages.length !== 0) {
             for (let i = 0; i < newImages.length; i++) {
-                const imgRef = ref(storage, `${product.name}/${newImages[i].name}`)
+                const imgRef = ref(storage, `${docRef.id}/${newImages[i].name}`)
                 await uploadBytes(imgRef, newImages[i])
                 newImageRefs.push(await getDownloadURL(imgRef))
             }
