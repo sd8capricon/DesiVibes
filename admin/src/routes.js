@@ -38,7 +38,8 @@ var routes = [
     name: "Edit Product",
     icon: "ni ni-active-40 text-primary",
     component: EditProduct,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true
   },
   {
     path: "/index",
