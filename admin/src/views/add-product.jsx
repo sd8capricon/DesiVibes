@@ -1,5 +1,5 @@
-import { useState, useRef } from "react"
-import { Container, Row, Form, FormGroup, Label, Input, Button, Badge, Col, Table, } from "reactstrap"
+import { useState } from "react"
+import { Container, Row, Form, FormGroup, Label, Input, Button, Badge, Table, } from "reactstrap"
 
 import { db, storage } from "firebase-config"
 import { addDoc, collection, updateDoc } from 'firebase/firestore'
@@ -12,16 +12,16 @@ export default function AddProuct() {
     const [newSize, setNewSize] = useState()
     const [sizes, setSize] = useState([])
 
-    const [variants, setVariants] = useState([])
+    let [variants, setVariants] = useState([])
     const [images, setImages] = useState([])
 
     const addColor = (e) => {
         e.preventDefault()
         if (colors.includes(newColor)) alert("color already exists")
-        else if (newColor == '') alert("color cannot be empty")
+        else if (newColor === '') alert("color cannot be empty")
         else {
             setColors([...colors, newColor])
-            if (sizes.length != 0) {
+            if (sizes.length !== 0) {
                 sizes.forEach(size => {
                     variants.push({ color: newColor, size, inventory: 0 })
                 })
@@ -34,15 +34,17 @@ export default function AddProuct() {
         e.preventDefault()
         colors.splice(index, 1)
         setColors([...colors])
+        variants = variants.filter(variant => variant.color === colors[index])
+        setVariants(variants)
     }
 
     const addSize = (e) => {
         e.preventDefault()
         if (sizes.includes(newSize)) alert("size already exists")
-        else if (newSize == '') alert("size cannot be empty")
+        else if (newSize === '') alert("size cannot be empty")
         else {
             setSize([...sizes, newSize])
-            if (colors.length != 0) {
+            if (colors.length !== 0) {
                 colors.forEach(color => {
                     variants.push({ color, size: newSize, inventory: 0 })
                 })
@@ -55,6 +57,8 @@ export default function AddProuct() {
         e.preventDefault()
         sizes.splice(index, 1)
         setSize([...sizes])
+        variants = variants.filter(variant => variant.size === sizes[index])
+        setVariants(variants)
     }
 
     const mapBadges = (color, index, removeFn) => {
@@ -73,7 +77,7 @@ export default function AddProuct() {
             const img = new Image()
             img.src = URL.createObjectURL(inputImages[i])
             img.onload = () => {
-                if (img.width == 500 && img.height == 500) {
+                if (img.width === 500 && img.height === 500) {
                     images.push(inputImages[i])
                     setImages([...images])
                 }
@@ -111,22 +115,22 @@ export default function AddProuct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (e.target.gender.value == "") {
+        if (e.target.gender.value === "") {
             return alert("Please Select a gender")
         }
-        if (e.target.gender.value == "") {
+        if (e.target.gender.value === "") {
             return alert("Please Select a category")
         }
-        if (colors.length == 0) {
+        if (colors.length === 0) {
             return alert("Please add atleast one color")
         }
-        if (sizes.length == 0) {
+        if (sizes.length === 0) {
             return alert("Please add atleast one size")
         }
 
         let product = {
             name: e.target.name.value,
-            category: Number(e.target.price.value),
+            price: Number(e.target.price.value),
             description: e.target.description.value,
             category: e.target.category.value,
             gender: e.target.gender.value,
