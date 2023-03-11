@@ -67,7 +67,7 @@ export default function Product() {
                         <div className="col-lg-5 pb-5">
                             <div id="product-carousel" className="carousel carousel-dark slide">
                                 <div className="carousel-inner border">
-                                    {product.photos.map((image, index) => {
+                                    {product.images.map((image, index) => {
                                         return (
                                             <div key={index} className={index === 0 ? "carousel-item active" : "carousel-item"}>
                                                 <img className="w-100 h-100" src={image} alt="Image" />
@@ -147,7 +147,7 @@ export default function Product() {
                     <div className="row">
                         <div className="col-md-6">
                             <h4 className="mb-4">Reviews for {product.name}</h4>
-                            {product.reviews.map((review, index) => {
+                            {product.reviews && product.reviews.map((review, index) => {
                                 return (
                                     <div key={index} className="mb-4">
                                         <h6>{review.reviewer}<small> - <i>{review.date}</i></small></h6>
