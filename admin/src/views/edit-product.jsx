@@ -184,7 +184,7 @@ export default function EditProduct() {
             <EmptyHeader />
             <div className="bg-gradient-info d-none d-md-block" style={{ height: "13vh" }}></div>
             <Container className="mt-3" fluid>
-                <h2 className="d-md-none mb-3">Add Product</h2>
+                <h2 className="d-md-none mb-3">Edit Product</h2>
                 <Row>
                     <div className="col">
                         <Form onSubmit={handleSubmit}>
