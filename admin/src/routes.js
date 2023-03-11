@@ -23,6 +23,7 @@ import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import AddProduct from "views/add-product";
+import EditProduct from "views/edit-product";
 
 var routes = [
   {
@@ -30,6 +31,13 @@ var routes = [
     name: "Add Product",
     icon: "ni ni-active-40 text-primary",
     component: AddProduct,
+    layout: "/admin"
+  },
+  {
+    path: "/edit-product/:id",
+    name: "Edit Product",
+    icon: "ni ni-active-40 text-primary",
+    component: EditProduct,
     layout: "/admin"
   },
   {

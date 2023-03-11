@@ -1,11 +1,15 @@
-import { useState } from "react"
-import { Container, Row, Form, FormGroup, Label, Input, Button, Badge, Table, } from "reactstrap"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"; import { Container, Row, Form, FormGroup, Label, Input, Button, Badge, Table, } from "reactstrap"
 
-import { db, storage } from "firebase-config"
-import { addDoc, collection, updateDoc } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage'
+import { db, storage } from "../firebase-config";
 
-export default function AddProuct() {
+export default function EditProduct() {
+    const product_id = useParams()
+    const docRef = doc(db, "products", product_id.id);
+
+    let [product, setProduct] = useState()
     const [newColor, setNewColor] = useState()
     const [colors, setColors] = useState([])
 
@@ -13,7 +17,32 @@ export default function AddProuct() {
     const [sizes, setSize] = useState([])
 
     let [variants, setVariants] = useState([])
-    const [images, setImages] = useState([])
+    const [dbImages, setDbImages] = useState([])
+    const [removedImages, setRemovedImages] = useState([])
+    const [newImages, setNewImages] = useState([])
+
+    useEffect(() => {
+        async function fetchProduct() {
+            const res = await getDoc(docRef)
+            setProduct(res.data())
+            setColors(res.data().colors)
+            setSize(res.data().sizes)
+            setVariants(res.data().variants)
+            setDbImages(res.data().images)
+        }
+        fetchProduct()
+    }, [])
+
+    const ImgPreview = ({ fn, src }) => {
+        return (
+            <div className="col-md-2 mx-3 pl-0">
+                <span className="position-relative">
+                    <Button className="px-1 mt-2 py-1 ml-2 position-absolute" style={{ right: 0 }} onClick={fn}><i className="ni ni-fat-remove" /></Button>
+                    <img style={{ width: "180px" }} src={src} />
+                </span>
+            </div>
+        )
+    }
 
     const addColor = (e) => {
         e.preventDefault()
@@ -70,6 +99,20 @@ export default function AddProuct() {
         )
     }
 
+    const mapVariants = (variant, index) => {
+        const handleInventoryChange = (e) => {
+            variant.inventory = Number(e.target.value)
+            setVariants([...variants])
+        }
+        return (
+            <tr key={index}>
+                <td>{variant.color}</td>
+                <td>{variant.size}</td>
+                <td><Input type="number" style={{ width: "20%" }} name="inventory" defaultValue={variant.inventory} onChange={handleInventoryChange} /></td>
+            </tr>
+        )
+    }
+
     const handleUpload = (e) => {
         e.preventDefault()
         const inputImages = e.target.files
@@ -78,39 +121,15 @@ export default function AddProuct() {
             img.src = URL.createObjectURL(inputImages[i])
             img.onload = () => {
                 if (img.width === 500 && img.height === 500) {
-                    images.push(inputImages[i])
-                    setImages([...images])
+                    newImages.push(inputImages[i])
+                    setNewImages([...newImages])
                 }
                 else {
-                    setImages([])
+                    setNewImages([])
                     alert(inputImages[i].name + " is not valid. Please upload images of size 500x500")
                 }
             }
         }
-    }
-
-    const removeImage = (e, index) => {
-        e.preventDefault()
-        images.splice(index, 1)
-        setImages([...images])
-    }
-
-    const mapVariants = (variant, index) => {
-        const handleInventoryChange = (e) => {
-            variant.inventory = parseInt(e.target.value)
-            setVariants([...variants])
-        }
-        return (
-            <tr key={index}>
-                <td>{variant.color}</td>
-                <td>{variant.size}</td>
-                <td><Input type="number" style={{ width: "20%" }} name="inventory" value={variant.inventory} onChange={handleInventoryChange} /></td>
-            </tr>
-        )
-    }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     const handleSubmit = async (e) => {
@@ -127,8 +146,7 @@ export default function AddProuct() {
         if (sizes.length === 0) {
             return alert("Please add atleast one size")
         }
-
-        let product = {
+        product = {
             name: e.target.name.value,
             price: Number(e.target.price.value),
             description: e.target.description.value,
@@ -138,21 +156,28 @@ export default function AddProuct() {
             sizes: sizes,
             variants: variants
         }
-        const docRef = await addDoc(collection(db, "products"), product)
-        const imageRefs = []
-        for (let i = 0; i < images.length; i++) {
-            const storageRef = ref(storage, `${docRef.id}/${images[i].name}`)
-            await uploadBytes(storageRef, images[i])
-            await getDownloadURL(storageRef).then((url) => {
-                console.log(url);
-                imageRefs.push(url)
-            })
+        if (removedImages.length !== 0) {
+            for (let i = 0; i < removedImages.length; i++) {
+                const imgRef = ref(storage, removedImages[i])
+                await deleteObject(imgRef)
+            }
+            product.images = arrayRemove(...removedImages)
         }
-        await updateDoc(docRef, { images: imageRefs })
-        console.log(docRef.id)
-        window.location.href = "/admin/products"
+
+        await updateDoc(docRef, product)
+        const newImageRefs = []
+        if (newImages.length !== 0) {
+            for (let i = 0; i < newImages.length; i++) {
+                const imgRef = ref(storage, `${product.name}/${newImages[i].name}`)
+                await uploadBytes(imgRef, newImages[i])
+                newImageRefs.push(await getDownloadURL(imgRef))
+            }
+            await updateDoc(docRef, { images: arrayUnion(...newImageRefs) })
+        }
+        window.location = '/'
     }
 
+    if (!product) return <h1>Loading...</h1>
     return (
         <>
             <div className="bg-gradient-info d-none d-md-block" style={{ height: "13vh" }}></div>
@@ -163,15 +188,15 @@ export default function AddProuct() {
                         <Form onSubmit={handleSubmit}>
                             <FormGroup>
                                 <Label for="name" >Product Title</Label>
-                                <Input type="text" name="name" placeholder="product name" required />
+                                <Input type="text" name="name" placeholder="product name" defaultValue={product.name} required />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="name" >Price</Label>
-                                <Input type="number" name="price" placeholder="product price" required />
+                                <Input type="number" name="price" placeholder="product price" defaultValue={product.price} required />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="gender" >For</Label>
-                                <Input type="select" name="gender" placeholder="Select Gender">
+                                <Input type="select" name="gender" defaultValue={product.gender} placeholder="Select Gender">
                                     <option value="">Select Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -179,7 +204,7 @@ export default function AddProuct() {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="category" >Category</Label>
-                                <Input type="select" name="category">
+                                <Input type="select" name="category" defaultValue={product.category}>
                                     <option value="">select category</option>
                                     <option value="shirts">shirts</option>
                                     <option value="t-shirts">t-shirts</option>
@@ -193,15 +218,15 @@ export default function AddProuct() {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="description">Product Description</Label>
-                                <Input type="textarea" name="description" placeholder="product description" required />
+                                <Input type="textarea" name="description" defaultValue={product.description} placeholder="product description" required />
                             </FormGroup>
                             <Row>
                                 <div className="col">
                                     <FormGroup>
                                         <Label for="colors" >Colors</Label><br />
                                         {colors.map((color, index) => mapBadges(color, index, removeColor))}
-                                        <Input className="mb-1" type="text" name="color" onChange={(e) => setNewColor(capitalizeFirstLetter(e.target.value))} />
-                                        <Button onClick={addColor}>Add Color</Button>
+                                        <Input className="mb-1" type="text" name="color" onChange={(e) => setNewColor(e.target.value)} />
+                                        <Button onClick={addColor} >Add Color</Button>
                                     </FormGroup>
                                 </div>
                                 <div className="col">
@@ -229,26 +254,35 @@ export default function AddProuct() {
                                 </Table>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Select Images to diplay on product page <small>only 500x500 accepted</small></Label>
-                                <Input type="file" accept="image/*" name="images" multiple onChange={handleUpload} required />
+                                <Label>Select/Delete Images to diplay on product page <small>only 500x500 accepted</small></Label>
+                                <Input type="file" accept="image/*" name="images" multiple onChange={handleUpload} />
                                 <Container fluid>
                                     <Row className="justify-content-start">
-                                        {images &&
-                                            images.map((image, index) => {
-                                                const fn = (e) => removeImage(e, index)
-                                                const src = URL.createObjectURL(image)
-                                                return <div key={index} className="col-md-2 mx-3 pl-0">
-                                                    <span className="position-relative">
-                                                        <Button className="px-1 mt-2 py-1 ml-2 position-absolute" style={{ right: 0 }} onClick={fn}><i className="ni ni-fat-remove" /></Button>
-                                                        <img style={{ width: "180px" }} src={src} alt="" />
-                                                    </span>
-                                                </div>
+                                        {dbImages &&
+                                            dbImages.map((image, index) => {
+                                                const removeDbImages = (e) => {
+                                                    e.preventDefault()
+                                                    dbImages.splice(index, 1)
+                                                    setDbImages([...dbImages])
+                                                    setRemovedImages([...removedImages, image])
+                                                }
+                                                return <ImgPreview key={index} fn={removeDbImages} src={image} />
+                                            })
+                                        }
+                                        {newImages &&
+                                            newImages.map((image, index) => {
+                                                const removeNewImages = (e) => {
+                                                    e.preventDefault()
+                                                    newImages.splice(index, 1)
+                                                    setNewImages([...newImages])
+                                                }
+                                                return <ImgPreview key={index} fn={removeNewImages} src={URL.createObjectURL(image)} />
                                             })
                                         }
                                     </Row>
                                 </Container>
                             </FormGroup>
-                            <Button>Add Product</Button>
+                            <Button>Edit Product</Button>
                         </Form>
                     </div>
                 </Row>
