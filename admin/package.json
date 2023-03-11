@@ -43,6 +43,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "firebase": "^9.17.2",
     "@fortawesome/fontawesome-free": "5.15.3",
     "bootstrap": "4.6.0",
     "chart.js": "2.9.4",
