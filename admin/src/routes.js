@@ -22,10 +22,18 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import Products from "views/products";
 import AddProduct from "views/add-product";
 import EditProduct from "views/edit-product";
 
 var routes = [
+  {
+    path: "/products",
+    name: "Products",
+    icon: "ni ni-active-40 text-primary",
+    component: Products,
+    layout: "/admin"
+  },
   {
     path: "/add-product",
     name: "Add Product",
