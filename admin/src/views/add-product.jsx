@@ -1,4 +1,5 @@
 import { useState } from "react"
+import EmptyHeader from "components/Headers/EmptyHeader"
 import { Container, Row, Form, FormGroup, Label, Input, Button, Badge, Table, } from "reactstrap"
 
 import { db, storage } from "firebase-config"
@@ -155,7 +156,7 @@ export default function AddProuct() {
 
     return (
         <>
-            <div className="bg-gradient-info d-none d-md-block" style={{ height: "13vh" }}></div>
+            <EmptyHeader />
             <Container className="mt-3" fluid>
                 <h2 className="d-md-none mb-3">Add Product</h2>
                 <Row>

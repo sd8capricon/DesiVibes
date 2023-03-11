@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import EmptyHeader from "components/Headers/EmptyHeader";
 import { useParams } from "react-router-dom"; import { Container, Row, Form, FormGroup, Label, Input, Button, Badge, Table, } from "reactstrap"
 
 import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore'
@@ -180,6 +181,7 @@ export default function EditProduct() {
     if (!product) return <h1>Loading...</h1>
     return (
         <>
+            <EmptyHeader />
             <div className="bg-gradient-info d-none d-md-block" style={{ height: "13vh" }}></div>
             <Container className="mt-3" fluid>
                 <h2 className="d-md-none mb-3">Add Product</h2>
