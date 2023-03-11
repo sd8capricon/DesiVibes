@@ -293,7 +293,7 @@ export default function EditProduct() {
                                     </Row>
                                 </Container>
                             </FormGroup>
-                            <Button>Edit Product</Button>
+                            <Button color="success">Edit Product</Button>
                         </Form>
                     </div>
                 </Row>

@@ -258,7 +258,7 @@ export default function AddProuct() {
                                     </Row>
                                 </Container>
                             </FormGroup>
-                            <Button>Add Product</Button>
+                            <Button color="success">Add Product</Button>
                         </Form>
                     </div>
                 </Row>
