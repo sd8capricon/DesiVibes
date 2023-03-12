@@ -24,6 +24,7 @@ export default function Product() {
             let cart = res.data().cart
             cart = [...cart, { product_id: product_id.id, product_name: product.name, size: form.size.value, color: form.color.value, quantity: quantity, price: product.price * quantity, price_per_unit: product.price }]
             await updateDoc(docRef, { cart })
+            window.location.reload()
         }
         else {
             alert('Please log in to add to cart')
