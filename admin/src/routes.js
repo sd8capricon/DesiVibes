@@ -30,14 +30,14 @@ var routes = [
   {
     path: "/products",
     name: "Products",
-    icon: "ni ni-active-40 text-primary",
+    icon: "ni ni-basket text-primary",
     component: Products,
     layout: "/admin"
   },
   {
     path: "/add-product",
     name: "Add Product",
-    icon: "ni ni-active-40 text-primary",
+    icon: "ni ni-app text-primary",
     component: AddProduct,
     layout: "/admin"
   },
@@ -49,54 +49,55 @@ var routes = [
     layout: "/admin",
     invisible: true
   },
-  {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: Index,
-    layout: "/admin"
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin"
-  },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/index",
+  //   name: "Dashboard",
+  //   icon: "ni ni-tv-2 text-primary",
+  //   component: Index,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "ni ni-planet text-blue",
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: Maps,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: Profile,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/tables",
+  //   name: "Tables",
+  //   icon: "ni ni-bullet-list-67 text-red",
+  //   component: Tables,
+  //   layout: "/admin"
+  // },
   {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
     component: Login,
-    layout: "/auth"
+    layout: "/auth",
+    invisible: true
   },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
-    layout: "/auth"
-  }
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   icon: "ni ni-circle-08 text-pink",
+  //   component: Register,
+  //   layout: "/auth"
+  // }
 ];
 export default routes;

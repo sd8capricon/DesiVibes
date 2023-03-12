@@ -55,6 +55,10 @@ import {
 var ps;
 
 const Sidebar = (props) => {
+  const brandStyle = {
+    fontSize: "2rem",
+    fontWeight: "bold",
+  }
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -119,12 +123,13 @@ const Sidebar = (props) => {
         </button>
         {/* Brand */}
         {logo ? (
-          <NavbarBrand className="pt-0" {...navbarBrandProps}>
-            <img
+          <NavbarBrand className="pt-0" style={brandStyle} {...navbarBrandProps}>
+            {/* <img
               alt={logo.imgAlt}
               className="navbar-brand-img"
               src={logo.imgSrc}
-            />
+            /> */}
+            <span style={{ color: "#1173EF" }}>Desi</span>Vibes
           </NavbarBrand>
         ) : null}
         {/* User */}
@@ -234,9 +239,9 @@ const Sidebar = (props) => {
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">Documentation</h6>
+          {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
           {/* Navigation */}
-          <Nav className="mb-md-3" navbar>
+          {/* <Nav className="mb-md-3" navbar>
             <NavItem>
               <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
                 <i className="ni ni-spaceship" />
@@ -255,15 +260,15 @@ const Sidebar = (props) => {
                 Components
               </NavLink>
             </NavItem>
-          </Nav>
-          <Nav className="mb-md-3" navbar>
+          </Nav> */}
+          {/* <Nav className="mb-md-3" navbar>
             <NavItem className="active-pro active">
               <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
                 <i className="ni ni-spaceship" />
                 Upgrade to PRO
               </NavLink>
             </NavItem>
-          </Nav>
+          </Nav> */}
         </Collapse>
       </Container>
     </Navbar>
