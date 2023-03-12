@@ -78,6 +78,18 @@
     border-color: #000;
 }
 
+.product-preview {
+    transition: opacity 0.5s ease-out;
+    color: #000;
+    text-decoration: none;
+}
+
+.product-preview:hover {
+    opacity: 0.7;
+    color: #000;
+}
+
+
 /* Cart */
 .cart .quantity-control .btn {
     font-size: .6em;

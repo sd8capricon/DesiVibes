@@ -1,8 +1,31 @@
+import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
+import ProductPreview from "../components/home/product-peview"
+
+import { db } from "../firebase-config"
+import { collection, query, orderBy, limit, getDocs } from "firebase/firestore"
 
 export default function Home() {
+    const [newArrivals, setNewArrivals] = useState([])
+    const [bestSellers, setBestSellers] = useState([])
+    const [showProducts, setShowProducts] = useState({ newArrivals: true, bestSellers: true })
+
+    useEffect(() => {
+        async function fetchProducts() {
+            const qBest = query(collection(db, "products"), orderBy("purchased", "desc"), limit(2))
+            const qNew = query(collection(db, "products"), orderBy("updatedAt", "desc"), limit(10))
+            let resBest = await getDocs(qBest)
+            let resNew = await getDocs(qNew)
+            resNew = resNew.docs.filter(doc => !resBest.docs.map(doc => doc.id).includes(doc.id))
+            setBestSellers(resBest.docs.map(doc => doc.data()))
+            setNewArrivals(resNew.map(doc => doc.data()))
+        }
+        fetchProducts()
+    }, [])
+
     return (
         <>
+            {console.log(newArrivals)}
             <Navbar hideCategories />
             <div className="container">
                 <div className="row header">
@@ -44,6 +67,23 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            <div className="container">
+                <div className="row g-0">
+                    <div className="d-flex flex-wrap justify-content-center mt-5 filter-button-group">
+                        <button type="button" className={`btn m-2 text-dark${showProducts.bestSellers && showProducts.newArrivals && " btn-primary"}`} onClick={(e) => setShowProducts({ bestSellers: true, newArrivals: true })}>All</button>
+                        <button type="button" className={`btn m-2 text-dark${showProducts.bestSellers && !showProducts.newArrivals && " btn-primary"}`} onClick={(e) => setShowProducts({ bestSellers: true, newArrivals: false })} >Best Sellers</button>
+                        <button type="button" className={`btn m-2 text-dark${!showProducts.bestSellers && showProducts.newArrivals && " btn-primary"}`} onClick={(e) => setShowProducts({ bestSellers: false, newArrivals: true })} >New Arrival</button>
+                    </div>
+                    <div className="row mt-3">
+                        {showProducts.bestSellers && bestSellers.map(product => (
+                            <ProductPreview key={product.id} product={product} />
+                        ))}
+                        {showProducts.newArrivals && newArrivals.map(product => (
+                            <ProductPreview key={product.id} product={product} />
+                        ))}
+                    </div>
+                </div>
+            </div >
         </>
     )
 }
