@@ -1,7 +1,7 @@
 import { useAuth } from "../contexts/AuthContext"
 
 export default function Navbar({ hideCategories }) {
-    const { currentUser } = useAuth()
+    const { currentUser, userFromDB, logout } = useAuth()
 
     return (
         <div className="container-fluid shadow py-2 mb-4">
@@ -32,10 +32,17 @@ export default function Navbar({ hideCategories }) {
                             <a href="contact.html" className="nav-item nav-link">Contact</a>
                         </div>
                         <div className="navbar-nav right ms-auto py-0">
-                            {currentUser ?
-                                <div className="nav-icons">
-                                    <a href="/checkout"><i className="bi bi-cart-fill"></i></a>
-                                    <a href="/profile"><i className="bi bi-person-circle"></i></a>
+                            {currentUser && userFromDB ?
+                                <div className="d-flex nav-icons">
+                                    <a href="/checkout" className="nav-icon">
+                                        <i className="bi bi-cart-fill" />
+                                        <span className="ms-2">{userFromDB.cart.length}</span>
+                                    </a>
+                                    <a href="/profile" className="nav-icon">
+                                        <i className="bi bi-person-circle" />
+                                        <span className="ms-2 fs-6">{currentUser.displayName}</span>
+                                    </a>
+                                    <a href="/auth" className="nav-item nav-link btn btn-primary" onClick={logout} style={{ fontSize: 'inherit' }}>Logout</a>
                                 </div> :
                                 <a href="/auth" className="nav-item nav-link btn btn-primary">Login/Register</a>
                             }

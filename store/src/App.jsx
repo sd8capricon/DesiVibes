@@ -13,6 +13,7 @@ import Category from './pages/category'
 import Shop from './pages/shop'
 import ResetPass from './pages/resetpass'
 import CheckOut from './pages/checkout'
+import NotFound from './pages/404'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/product/:id' element={<Product />} />
           <Route path='/forgot-password' element={<ResetPass />} />
           <Route path='/checkout' element={<CheckOut />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </AuthContextProvider>
     </Router>
