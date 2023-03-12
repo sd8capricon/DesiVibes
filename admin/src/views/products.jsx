@@ -90,7 +90,7 @@ export default function Products() {
                                         className="pagination justify-content-end mb-0"
                                         listClassName="justify-content-end mb-0"
                                     >
-                                        <PaginationItem className={page === 1 && "disabled"}>
+                                        <PaginationItem className={page === 1 ? "disabled" : ""}>
                                             <PaginationLink
                                                 href=""
                                                 onClick={prevPage}
