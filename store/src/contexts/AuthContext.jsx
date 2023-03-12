@@ -13,12 +13,12 @@ export default function AuthContextProvider(props) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    function signup(email, password, name, address, city, state) {
+    function signup(email, password, name, address, city, state, optIn) {
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
                 sendEmailVerification(auth.currentUser)
                 updateProfile(auth.currentUser, { displayName: name })
-                setDoc(doc(db, "users", auth.currentUser.uid), { billing_address: address, city, state, cart: [] })
+                setDoc(doc(db, "users", auth.currentUser.uid), { billing_address: address, city, state, cart: [], optIn })
             });
     }
 
