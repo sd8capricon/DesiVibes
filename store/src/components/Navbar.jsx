@@ -7,7 +7,7 @@ export default function Navbar({ hideCategories }) {
         <div className="container-fluid shadow py-2 mb-4">
             <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">DesiVibes</a>
+                    <a className="navbar-brand main-title" href="#"><span>Desi</span>Vibes</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
