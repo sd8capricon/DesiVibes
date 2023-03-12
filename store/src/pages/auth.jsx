@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Link } from 'react-router-dom'
 import { useAuth } from "../contexts/AuthContext"
 
@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar"
 
 export default function Auth(props) {
     const { currentUser, signup, login } = useAuth()
-    const [formType, setFormType] = useState('Login In')
+    const [formType, setFormType] = useState('Log In')
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -44,7 +44,7 @@ export default function Auth(props) {
                             <button onClick={switchFormType} className="nav-link active" data-bs-toggle="tab" aria-controls="profile-tab-pane" aria-selected="false">Log In</button>
                         </li>
                     </ul>
-                    <AuthForm formType={formType} />
+                    <AuthForm formType={formType} handleSubmit={handleSubmit} />
                     {formType === 'Log In' &&
                         <Link to="/forgot-password">Forgot Password?</Link>}
                 </div>

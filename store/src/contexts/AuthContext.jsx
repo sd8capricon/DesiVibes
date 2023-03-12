@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, updateProfile } from 'firebase/auth'
 import { auth, db } from '../firebase-config'
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -11,6 +11,7 @@ export function useAuth() {
 
 export default function AuthContextProvider(props) {
     const [currentUser, setCurrentUser] = useState(null);
+    const [userFromDB, setUserFromDB] = useState()
     const [loading, setLoading] = useState(true);
 
     function signup(email, password, name, address, city, state, optIn) {
@@ -25,7 +26,7 @@ export default function AuthContextProvider(props) {
     function login(email, password) {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
-                console.log(userCredential)
+                window.location = "/"
             })
             .catch(error => {
                 const errorCode = error.code;
@@ -53,6 +54,9 @@ export default function AuthContextProvider(props) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user);
+            if (user) {
+                getDoc(doc(db, "users", user.uid)).then(res => setUserFromDB(res.data()))
+            }
             setLoading(false);
         })
         return unsubscribe;
@@ -60,6 +64,7 @@ export default function AuthContextProvider(props) {
 
     const value = {
         currentUser,
+        userFromDB,
         login,
         signup,
         logout,
