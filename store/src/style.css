@@ -118,6 +118,15 @@
     color: #000;
 }
 
+.product-filter h4 {
+    margin-bottom: 30px;
+}
+
+.product-filter .form-check {
+    margin-top: 10px;
+    font-size: large;
+}
+
 
 /* Cart */
 .cart .quantity-control .btn {

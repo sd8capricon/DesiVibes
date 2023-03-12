@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 import ProductPreview from "../components/home/product-peview"
 
 import { db } from '../firebase-config'
-import { getDocs, collection, startAfter, endBefore, limitToLast, query, orderBy, limit } from 'firebase/firestore'
+import { query, getDocs, limit, collection, orderBy, where, limitToLast, endBefore } from 'firebase/firestore'
 
-export default function shop() {
+
+export default function Category() {
+    const { category } = useParams()
     const pageLimit = 3
     const collectionRef = collection(db, "products")
     const [products, setProducts] = useState([])
@@ -40,39 +43,37 @@ export default function shop() {
 
     useEffect(() => {
         async function fetchProducts() {
-            const q = query(collectionRef, orderBy("name"), limit(pageLimit))
+            const q = query(collectionRef, where("category", "==", category), orderBy("name"), limit(3))
             const res = await getDocs(q)
             const data = res.docs.map(doc => doc.data())
             updateColors(data)
             updateSizes(data)
             setProducts(data)
-
         }
         fetchProducts()
-
     }, [])
 
-    const nextPage = async (e) => {
+    const prevPage = async () => {
         e.preventDefault()
-        const last = products[products.length - 1]
-        const q = query(collectionRef, orderBy("name"), startAfter(last.name), limit(pageLimit))
+        const first = products[0]
+        const q = query(collectionRef, where("category", "==", category), orderBy("name"), endBefore(first.name), limitToLast(pageLimit))
         let res = await getDocs(q)
-        if (res.docs.length === 0) {
-            return alert("No more products")
-        }
-        setPage(page + 1)
+        setPage(page - 1)
         const data = res.docs.map(doc => doc.data())
         updateColors(data)
         updateSizes(data)
         setProducts(data)
     }
 
-    const prevPage = async () => {
+    const nextPage = async (e) => {
         e.preventDefault()
-        const first = products[0]
-        const q = query(collectionRef, orderBy("name"), endBefore(first.name), limitToLast(pageLimit))
+        const last = products[products.length - 1]
+        const q = query(collectionRef, where("category", "==", category), orderBy("name"), startAfter(last.name), limit(pageLimit))
         let res = await getDocs(q)
-        setPage(page - 1)
+        if (res.docs.length === 0) {
+            return alert("No more products")
+        }
+        setPage(page + 1)
         const data = res.docs.map(doc => doc.data())
         updateColors(data)
         updateSizes(data)
@@ -109,7 +110,7 @@ export default function shop() {
             }
         }
         return (
-            <div className="form-check filter-checks">
+            <div className="form-check">
                 <input className="form-check-input" type="checkbox" value={value} name={name} onChange={handleCheck} checked={checked} />
                 <label className="form-check-label" htmlFor={name}>{value}</label>
             </div >
@@ -132,19 +133,20 @@ export default function shop() {
         <>
             <Navbar />
             <div className="container">
-                <h1>Shop</h1>
+                <h2>Category: {category}</h2>
             </div>
             <section className='container mt-4'>
                 <div className="row">
                     <div className="col-2">
-                        <h4>Filter by Color</h4>
                         <div className="product-filter">
+                            <h4>Filter by Color</h4>
                             {colors.map((color, index) => (
                                 <CheckBoxes key={index} index={index} name="color" value={color.value} checked={color.checked} />
                             ))}
+                            <hr />
                         </div>
-                        <h4 className="mt-4">Filter by Size</h4>
                         <div className="product-filter">
+                            <h4 className="mt-4">Filter by Size</h4>
                             {sizes.map((size, index) => (
                                 <CheckBoxes key={index} index={index} name="size" value={size.value} checked={size.checked} />
                             ))}
