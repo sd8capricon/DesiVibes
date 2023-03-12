@@ -12,7 +12,7 @@ export default function Footer() {
                 <div className="col-lg-7 col-md-12">
                     <div className="row">
                         <div className="col-md-4 mb-5">
-                            <h5 className="font-weight-bold text-dark mb-4">Quick Links</h5>
+                            <h5 className="font-weight-bold text-dark mb-4">Links</h5>
                             <div className="d-flex flex-column justify-content-start">
                                 <a className="text-dark mb-2" href="/"><i className="bi bi-caret-right-fill me-2"></i>Home</a>
                                 <a className="text-dark mb-2" href="/shop"><i className="bi bi-caret-right-fill me-2"></i>Our Shop</a>
