@@ -3,7 +3,7 @@ import EmptyHeader from "components/Headers/EmptyHeader"
 import { Container, Row, Form, FormGroup, Label, Input, Button, Badge, Table, } from "reactstrap"
 
 import { db, storage } from "firebase-config"
-import { addDoc, collection, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 export default function AddProuct() {
@@ -110,7 +110,7 @@ export default function AddProuct() {
         )
     }
 
-    function capitalizeFirstLetter(string) {
+    const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
@@ -146,7 +146,9 @@ export default function AddProuct() {
             colors: colors,
             sizes: sizes,
             variants: variants,
-            totalInventory: calculateInventory()
+            totalInventory: calculateInventory(),
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
         }
         const docRef = await addDoc(collection(db, "products"), product)
         const imageRefs = []

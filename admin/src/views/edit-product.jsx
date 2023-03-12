@@ -141,6 +141,10 @@ export default function EditProduct() {
         return inventory
     }
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (e.target.gender.value === "") {
@@ -164,7 +168,8 @@ export default function EditProduct() {
             colors: colors,
             sizes: sizes,
             variants: variants,
-            totalInventory: calculateInventory()
+            totalInventory: calculateInventory(),
+            updatedAt: serverTimestamp()
         }
         if (removedImages.length !== 0) {
             for (let i = 0; i < removedImages.length; i++) {
@@ -236,7 +241,7 @@ export default function EditProduct() {
                                     <FormGroup>
                                         <Label for="colors" >Colors</Label><br />
                                         {colors.map((color, index) => mapBadges(color, index, removeColor))}
-                                        <Input className="mb-1" type="text" name="color" onChange={(e) => setNewColor(e.target.value)} />
+                                        <Input className="mb-1" type="text" name="color" onChange={(e) => setNewColor(capitalizeFirstLetter(e.target.value))} />
                                         <Button onClick={addColor} >Add Color</Button>
                                     </FormGroup>
                                 </div>
