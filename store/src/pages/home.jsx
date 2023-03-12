@@ -58,9 +58,23 @@ export default function Home() {
                             <div className="carousel-inner">
                                 <div className="carousel-item active">
                                     <img src={carousel1} className="img-fluid" alt="carousel-1" />
+                                    <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                        <div className="p-3" style={{ maxWidth: "700px" }}>
+                                            <h4 className="text-light text-uppercase fw-semibold mb-3">Some Discout Coupon</h4>
+                                            <h3 className="display-4 text-white fw-semibold mb-4">Reasonable Price</h3>
+                                            <a href="" className="btn btn-primary py-2 px-3">Shop Now</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="carousel-item">
                                     <img src={carousel2} className="d-block img-fluid" alt="carousel-2" />
+                                    <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                        <div className="p-3" style={{ maxWidth: "700px" }}>
+                                            <h4 className="text-light text-uppercase fw-semibold mb-3">Some Discout Coupon</h4>
+                                            <h3 className="display-4 text-white fw-semibold mb-4">Reasonable Price</h3>
+                                            <a href="" className="btn btn-primary py-2 px-3">Shop Now</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <button className="carousel-control-prev carousel-control" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
