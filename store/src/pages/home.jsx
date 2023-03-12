@@ -6,8 +6,8 @@ import ProductPreview from "../components/home/product-peview"
 import { db } from "../firebase-config"
 import { collection, query, orderBy, limit, getDocs, where } from "firebase/firestore"
 
-import carousel1 from "../../public/imgs/carousel-1.jpg"
-import carousel2 from "../../public/imgs/carousel-2.jpg"
+import carousel1 from "../imgs/carousel-1.jpg"
+import carousel2 from "../imgs/carousel-2.jpg"
 
 export default function Home() {
     const [newArrivals, setNewArrivals] = useState([])

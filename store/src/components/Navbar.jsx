@@ -14,8 +14,8 @@ export default function Navbar({ hideCategories }) {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <div className="navbar-nav flex justify-content-center">
                             <a href="/" className="nav-item nav-link active">Home</a>
-                            <a href="shop.html" className="nav-item nav-link">Shop</a>
-                            <a href="detail.html" className="nav-item nav-link">About Us</a>
+                            <a href="/shop" className="nav-item nav-link">Shop</a>
+                            {/* <a href="/detail.html" className="nav-item nav-link">About Us</a> */}
                             {!hideCategories && <div className="nav-item dropdown">
                                 <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Shop by Category</a>
                                 <div className="dropdown-menu rounded-0 m-0">
@@ -29,7 +29,7 @@ export default function Navbar({ hideCategories }) {
                                     <a className="dropdown-item" href="/category/blzers">Blazers</a>
                                 </div>
                             </div>}
-                            <a href="contact.html" className="nav-item nav-link">Contact</a>
+                            <a href="/contact" className="nav-item nav-link">Contact</a>
                         </div>
                         <div className="navbar-nav right ms-auto py-0">
                             {currentUser && userFromDB ?
