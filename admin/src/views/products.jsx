@@ -15,25 +15,43 @@ import {
 import EmptyHeader from "components/Headers/EmptyHeader";
 
 import { db, storage } from "../firebase-config"
-import { collection, doc, getDocs, getDoc, deleteDoc } from "firebase/firestore"
+import { collection, doc, getDocs, getDoc, deleteDoc, query, startAt, orderBy, limit, startAfter, endBefore, limitToLast } from "firebase/firestore"
 import { deleteObject, ref } from "firebase/storage";
 
 export default function Products() {
     const [products, setProducts] = useState([])
     const [product, setProduct] = useState()
-    // const docRef = doc(db, "products", "JSJzOdYikWvUem2tkpSw")
     const collectionRef = collection(db, "products")
+    const pageLimit = 5
+    let [page, setPage] = useState(1)
 
     useEffect(() => {
         async function fetchProducts() {
-            // let res = await getDoc(docRef)
-            // setProduct(res.data())
-            // console.log(res.data())
-            let res = await getDocs(collectionRef)
+            const q = query(collectionRef, orderBy("name"), limit(pageLimit))
+            let res = await getDocs(q)
             setProducts(res.docs.map(doc => doc.data()))
         }
         fetchProducts()
     }, [])
+
+    const nextPage = async () => {
+        const last = products[products.length - 1]
+        const q = query(collectionRef, orderBy("name"), startAfter(last.name), limit(pageLimit))
+        let res = await getDocs(q)
+        if (res.docs.length === 0) {
+            return alert("No more products")
+        }
+        setPage(page + 1)
+        setProducts(res.docs.map(doc => doc.data()))
+    }
+
+    const prevPage = async () => {
+        const first = products[0]
+        const q = query(collectionRef, orderBy("name"), endBefore(first.name), limitToLast(pageLimit))
+        let res = await getDocs(q)
+        setPage(page - 1)
+        setProducts(res.docs.map(doc => doc.data()))
+    }
 
     if (!products) {
         return <div>Loading...</div>
@@ -72,44 +90,20 @@ export default function Products() {
                                         className="pagination justify-content-end mb-0"
                                         listClassName="justify-content-end mb-0"
                                     >
-                                        <PaginationItem className="disabled">
+                                        <PaginationItem className={page === 1 && "disabled"}>
                                             <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
+                                                href=""
+                                                onClick={prevPage}
                                                 tabIndex="-1"
                                             >
                                                 <i className="fas fa-angle-left" />
                                                 <span className="sr-only">Previous</span>
                                             </PaginationLink>
                                         </PaginationItem>
-                                        <PaginationItem className="active">
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                1
-                                            </PaginationLink>
-                                        </PaginationItem>
                                         <PaginationItem>
                                             <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                2 <span className="sr-only">(current)</span>
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
-                                            >
-                                                3
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                        <PaginationItem>
-                                            <PaginationLink
-                                                href="#pablo"
-                                                onClick={(e) => e.preventDefault()}
+                                                href=""
+                                                onClick={nextPage}
                                             >
                                                 <i className="fas fa-angle-right" />
                                                 <span className="sr-only">Next</span>
