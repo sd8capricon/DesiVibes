@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
+import Footer from "../components/footer"
 import ProductPreview from "../components/home/product-peview"
 
 import { db } from "../firebase-config"
@@ -136,6 +137,7 @@ export default function Home() {
                     ))}
                 </div>
             </section>
+            <Footer />
         </>
     )
 }

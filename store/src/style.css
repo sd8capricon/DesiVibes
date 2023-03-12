@@ -123,3 +123,19 @@
 .cart .quantity-control .btn {
     font-size: .6em;
 }
+
+/* Footer */
+.footer {
+    background-color: #EDF1FF !important;
+}
+
+.footer .title {
+    text-decoration: none;
+    color: #000;
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+.footer .title span {
+    color: var(--primary);
+}
