@@ -72,10 +72,39 @@
     height: 410px;
 }
 
+@media screen and (max-width: 768px) {
+    .header .carousel-item img {
+        height: inherit;
+        object-fit: cover;
+    }
+}
+
 .header .carousel .carousel-control span {
     padding: 15px;
     background-color: #000;
     border-color: #000;
+}
+
+.section-title {
+    text-align: center;
+}
+
+.section-title h2 {
+    position: relative;
+    display: inline-block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.section-title h2::before {
+    position: absolute;
+    content: "";
+    width: 6px;
+    height: 50px;
+    background-color: var(--primary);
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .product-preview {

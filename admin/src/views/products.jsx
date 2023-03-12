@@ -15,7 +15,7 @@ import {
 import EmptyHeader from "components/Headers/EmptyHeader";
 
 import { db, storage } from "../firebase-config"
-import { collection, doc, getDocs, deleteDoc, query, orderBy, limit, startAfter, endBefore, limitToLast } from "firebase/firestore"
+import { collection, doc, getDocs, updateDoc, deleteDoc, query, orderBy, limit, startAfter, endBefore, limitToLast } from "firebase/firestore"
 import { deleteObject, ref } from "firebase/storage";
 
 export default function Products() {
@@ -122,13 +122,27 @@ export default function Products() {
 }
 
 const ProductRow = ({ product }) => {
+    const docRef = doc(db, "products", product.id)
 
     const deleteProduct = async () => {
-        const docRef = doc(db, "products", product.id)
         await deleteDoc(docRef)
         product.images.forEach(async (image) => {
             const imageRef = ref(storage, image)
             await deleteObject(imageRef)
+        })
+        window.location.reload()
+    }
+
+    const removeFeatured = async () => {
+        await updateDoc(docRef, {
+            featured: false
+        })
+        window.location.reload()
+    }
+
+    const addToFeatured = async () => {
+        await updateDoc(docRef, {
+            featured: true
         })
         window.location.reload()
     }
@@ -156,7 +170,11 @@ const ProductRow = ({ product }) => {
             <td >
                 <a className="btn btn-primary" style={{ fontSize: "12px" }} href={`/admin/edit-product/${product.id}`} target="_blank">Edit</a>
                 <Button style={{ fontSize: "12px" }} color="danger" onClick={deleteProduct}>Delete</Button>
+                {product.featured ?
+                    <Button style={{ fontSize: "12px" }} color="success" onClick={removeFeatured}> Featured</Button> :
+                    <Button style={{ fontSize: "12px" }} color="warning" onClick={addToFeatured}> Not Featured</Button>
+                }
             </td>
-        </tr>
+        </tr >
     )
 }
