@@ -15,7 +15,7 @@ import {
 import EmptyHeader from "components/Headers/EmptyHeader";
 
 import { db, storage } from "../firebase-config"
-import { collection, doc, getDocs, getDoc, deleteDoc, query, startAt, orderBy, limit, startAfter, endBefore, limitToLast } from "firebase/firestore"
+import { collection, doc, getDocs, deleteDoc, query, orderBy, limit, startAfter, endBefore, limitToLast } from "firebase/firestore"
 import { deleteObject, ref } from "firebase/storage";
 
 export default function Products() {
