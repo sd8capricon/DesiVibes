@@ -22,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
   },
-  "homepage": "https://demos.creative-tim.com/argon-dashboard-react/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -44,6 +43,7 @@
   ],
   "dependencies": {
     "firebase": "^9.17.2",
+    "firebase-tools": "^11.24.1",
     "@fortawesome/fontawesome-free": "5.15.3",
     "bootstrap": "4.6.0",
     "chart.js": "2.9.4",

@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "desivibes-534e7"
+  },
+  "targets": {
+    "desivibes-534e7": {
+      "hosting": {
+        "admin": [
+          "dv-admin"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
